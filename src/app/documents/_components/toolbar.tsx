@@ -26,6 +26,7 @@ import HeadingButton from "./heading-button";
 import TextColorButton from "./text-color-button";
 import HighlightColorButton from "./highlight-color-button";
 import LinkButton from "./link-button";
+import ImageButton from "./image-button";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -117,7 +118,7 @@ const Toolbar = () => {
       <HighlightColorButton />
       <Separator orientation="vertical" className="h-7" />
       <LinkButton />
-      {/*//TODO: Image*/}
+      <ImageButton/>
       {/*//TODO: Align*/}
       {/*//TODO: Line height*/}
       {/*//TODO: List*/}
