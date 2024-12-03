@@ -23,6 +23,9 @@ import {
 
 import { useEditorStore } from "@/store/use-editor-store";
 import HeadingButton from "./heading-button";
+import TextColorButton from "./text-color-button";
+import HighlightColorButton from "./highlight-color-button";
+import LinkButton from "./link-button";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -110,10 +113,10 @@ const Toolbar = () => {
       {section[1].map((item) => (
         <ToolbarButton {...item} key={item.label} />
       ))}
-      {/*//TODO: Text Color*/}
-      {/*//TODO: Highlight Color*/}
+      <TextColorButton />
+      <HighlightColorButton />
       <Separator orientation="vertical" className="h-7" />
-      {/*//TODO: Link*/}
+      <LinkButton />
       {/*//TODO: Image*/}
       {/*//TODO: Align*/}
       {/*//TODO: Line height*/}

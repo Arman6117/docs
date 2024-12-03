@@ -2,6 +2,7 @@
 
 import { EditorContent, useEditor } from "@tiptap/react";
 
+import { Color } from '@tiptap/extension-color'
 import TableCell from "@tiptap/extension-table-cell";
 import ImageResize from "tiptap-extension-resize-image";
 import TableRow from "@tiptap/extension-table-row";
@@ -12,6 +13,10 @@ import Image from "@tiptap/extension-image";
 import Table from "@tiptap/extension-table";
 import TextStyle from "@tiptap/extension-text-style";
 import FontFamily from "@tiptap/extension-font-family";
+import Highlight from '@tiptap/extension-highlight'
+import Link from '@tiptap/extension-link'
+
+
 
 import StarterKit from "@tiptap/starter-kit";
 
@@ -54,6 +59,13 @@ const Editor = () => {
       },
     },
     extensions: [
+      Link.configure({
+        autolink: true,
+        defaultProtocol:"https",
+        openOnClick:false
+      }),
+      Highlight.configure({ multicolor: true }),
+      Color,
       FontFamily,
       TextStyle,
       StarterKit,
