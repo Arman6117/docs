@@ -2,6 +2,8 @@
 
 import { EditorContent, useEditor } from "@tiptap/react";
 
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
 import { Color } from '@tiptap/extension-color'
 import TableCell from "@tiptap/extension-table-cell";
 import ImageResize from "tiptap-extension-resize-image";
@@ -17,11 +19,10 @@ import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 
+import { FontSizeExtension } from "@/extensions/font-size-extension";
 
-import StarterKit from "@tiptap/starter-kit";
 
 import { useEditorStore } from "@/store/use-editor-store";
-import Underline from "@tiptap/extension-underline";
 
 const Editor = () => {
   const { setEditor } = useEditorStore();
@@ -59,6 +60,7 @@ const Editor = () => {
       },
     },
     extensions: [
+      FontSizeExtension,
       TextAlign.configure({types:['heading', 'paragraph']}),
       Link.configure({
         autolink: true,

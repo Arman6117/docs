@@ -29,6 +29,7 @@ import LinkButton from "./link-button";
 import ImageButton from "./image-button";
 import AlignButton from "./align-button";
 import ListButton from "./list-button";
+import FontSize from "./font-size";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -111,7 +112,7 @@ const Toolbar = () => {
       <Separator orientation="vertical" className="h-7" />
       <HeadingButton />
       <Separator orientation="vertical" className="h-7" />
-      {/*//TODO: Font Size*/}
+      <FontSize />
       <Separator orientation="vertical" className="h-7" />
       {section[1].map((item) => (
         <ToolbarButton {...item} key={item.label} />
