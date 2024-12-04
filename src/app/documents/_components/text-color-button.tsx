@@ -1,5 +1,6 @@
 "use client";
 
+import TooltipWrapper from "@/components/tooltip-wrapper";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,7 @@ const TextColorButton = () => {
   };
   return (
     <DropdownMenu>
+      <TooltipWrapper label="Text Color">
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
@@ -29,6 +31,7 @@ const TextColorButton = () => {
           <div className=" h-0.5 w-full" style={{ backgroundColor: value }} />
         </button>
       </DropdownMenuTrigger>
+        </TooltipWrapper>
       <DropdownMenuContent className="border-0 p-0">
         <SketchPicker color={value} onChange={onChange} />
       </DropdownMenuContent>

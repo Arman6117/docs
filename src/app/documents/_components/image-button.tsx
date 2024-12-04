@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import TooltipWrapper from "@/components/tooltip-wrapper";
 const ImageButton = () => {
   const { editor } = useEditorStore();
   const [imageURL, setImageURL] = useState("");
@@ -51,7 +52,8 @@ const ImageButton = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <TooltipWrapper label="Insert Image">
+        <DropdownMenuTrigger asChild>
           <button
             className={
               "rounded-sm shrink-0 h-7 min-w-7 flex flex-col items-center justify-between font-medium text-sm p-1 hover:bg-neutral-200/80"
@@ -60,6 +62,7 @@ const ImageButton = () => {
             <ImageIcon className="size-5" />
           </button>
         </DropdownMenuTrigger>
+          </TooltipWrapper>
         <DropdownMenuContent>
           <DropdownMenuItem onClick={onUpload}>
             <UploadIcon className="size-4 mr-2" />

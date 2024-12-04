@@ -12,6 +12,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import { cn } from "@/lib/utils";
 
 import { HighlighterIcon } from "lucide-react";
+import TooltipWrapper from "@/components/tooltip-wrapper";
 const HighlightColorButton = () => {
   const { editor } = useEditorStore();
 
@@ -22,6 +23,7 @@ const HighlightColorButton = () => {
   };
   return (
     <DropdownMenu>
+      <TooltipWrapper label="Add Highlight">
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
@@ -32,6 +34,7 @@ const HighlightColorButton = () => {
           <div className=" h-0.5 w-full" style={{ backgroundColor: value }} />
         </button>
       </DropdownMenuTrigger>
+        </TooltipWrapper>
       <DropdownMenuContent className="border-0 p-0">
         <SketchPicker color={value} onChange={onChange} />
       </DropdownMenuContent>
