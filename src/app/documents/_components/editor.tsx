@@ -15,7 +15,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import FontFamily from "@tiptap/extension-font-family";
 import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
-
+import TextAlign from '@tiptap/extension-text-align'
 
 
 import StarterKit from "@tiptap/starter-kit";
@@ -59,6 +59,7 @@ const Editor = () => {
       },
     },
     extensions: [
+      TextAlign.configure({types:['heading', 'paragraph']}),
       Link.configure({
         autolink: true,
         defaultProtocol:"https",
@@ -70,7 +71,6 @@ const Editor = () => {
       TextStyle,
       StarterKit,
       Image,
-
       ImageResize,
       Table,
       TableCell,
