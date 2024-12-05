@@ -30,6 +30,7 @@ import ImageButton from "./image-button";
 import AlignButton from "./align-button";
 import ListButton from "./list-button";
 import FontSize from "./font-size";
+import LineHeightButton from "./line-height-button";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -123,7 +124,7 @@ const Toolbar = () => {
       <LinkButton />
       <ImageButton />
       <AlignButton />
-      {/*//TODO: Line height*/}
+      <LineHeightButton />
       <ListButton />
       <Separator orientation="vertical" className="h-7" />
       {section[2].map((item) => (
