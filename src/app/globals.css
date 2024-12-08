@@ -71,27 +71,33 @@ body {
   }
 }
 
+.menubarTrigger {
+  @apply text-sm font-normal py-0.5 px-2 rounded-sm hover:bg-muted h-auto;
+}
+.menubarIcon {
+  @apply size-4 mr-2;
+}
 .tiptap {
-    /* Code and preformatted text styles */
-    code {
-      @apply text-purple-400;
-      border-radius: 0.4rem;
-      color: var(--black);
-      font-size: 0.85rem;
-      padding: 0.25em 0.3em;
+  /* Code and preformatted text styles */
+  code {
+    @apply text-purple-400;
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  /* Link styles */
+  a {
+    @apply text-blue-600;
+    cursor: pointer;
+
+    &:hover {
+      @apply text-purple-600;
     }
-  
-    /* Link styles */
-    a {
-      @apply text-blue-600;
-      cursor: pointer;
-  
-      &:hover {
-        @apply text-purple-600;
-      }
-    }
-   /* Task list specific styles */
-   ul[data-type="taskList"] {
+  }
+  /* Task list specific styles */
+  ul[data-type="taskList"] {
     list-style: none;
     margin-left: 0;
     padding: 0;
@@ -150,7 +156,10 @@ body {
     .selectedCell:after {
       background: #b5b5b5;
       content: "";
-      left: 0; right: 0; top: 0; bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
       pointer-events: none;
       position: absolute;
       z-index: 2;
