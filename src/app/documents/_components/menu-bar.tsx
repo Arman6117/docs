@@ -1,3 +1,4 @@
+"use client";
 import {
   Menubar,
   MenubarContent,
@@ -10,13 +11,14 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useEditorStore } from "@/store/use-editor-store";
+
 import {
   BoldIcon,
   FileIcon,
   FileJsonIcon,
   FilePenIcon,
   FilePlusIcon,
-
   GlobeIcon,
   ItalicIcon,
   PrinterIcon,
@@ -33,6 +35,59 @@ import {
 import { BsFilePdf } from "react-icons/bs";
 
 const MenuBar = () => {
+  const { editor } = useEditorStore();
+  const table = [
+    [1, 1],
+    [2, 2],
+    [3, 3],
+    [4, 4],
+    [5, 5],
+    [6, 6],
+    [7, 7],
+  ];
+
+  const insertTable = ({ rows, cols }: { rows: number; cols: number }) => {
+    editor
+      ?.chain()
+      .focus()
+      .insertTable({ rows, cols, withHeaderRow: false })
+      .run();
+  };
+
+  const download = (blob: Blob, fileName: string) => {
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+  };
+
+  const onSaveJson = () => {
+    if (!editor) return;
+    const content = editor.getJSON();
+    const blob = new Blob([JSON.stringify(content)], {
+      type: "application/json",
+    });
+    download(blob, `document.json`); //TODO:Use actual document name
+  };
+  const onSaveHTML = () => {
+    if (!editor) return;
+    const content = editor.getHTML();
+    const blob = new Blob([content], {
+      type: "text/html",
+    });
+    download(blob, `document.html`); //TODO:Use actual document name
+  };
+  const onSaveText = () => {
+    if (!editor) return;
+    const content = editor.getText();
+    const blob = new Blob([content], {
+      type: "text/plain",
+    });
+    download(blob, `document.txt`); //TODO:Use actual document name
+  };
+
   return (
     <div className="flex">
       <Menubar className="border-none bg-transparent h-auto p-0 shadow-none">
@@ -45,19 +100,19 @@ const MenuBar = () => {
                 Save
               </MenubarSubTrigger>
               <MenubarSubContent>
-                <MenubarItem>
+                <MenubarItem onClick={onSaveJson}>
                   <FileJsonIcon className="menubarIcon" />
                   JSON
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem onClick={onSaveHTML}>
                   <GlobeIcon className="menubarIcon" />
                   HTML
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem onClick={() => window.print()}>
                   <BsFilePdf className="menubarIcon" />
                   PDF
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem onClick={onSaveText}>
                   <TextIcon className="menubarIcon" />
                   Text
                 </MenubarItem>
@@ -78,7 +133,7 @@ const MenuBar = () => {
               Remove
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>
+            <MenubarItem onClick={() => window.print()}>
               <PrinterIcon className="menubarIcon" />
               Print
               <MenubarShortcut>Ctrl P</MenubarShortcut>
@@ -88,12 +143,12 @@ const MenuBar = () => {
         <MenubarMenu>
           <MenubarTrigger className="menubarTrigger">Edit</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>
+            <MenubarItem onClick={() => editor?.chain().focus().undo().run()}>
               <Undo2Icon className="menubarIcon" />
               Undo
               <MenubarShortcut>Ctrl Z</MenubarShortcut>
             </MenubarItem>
-            <MenubarItem>
+            <MenubarItem onClick={() => editor?.chain().focus().redo().run()}>
               <Redo2Icon className="menubarIcon" />
               Redo
               <MenubarShortcut>Ctrl Y</MenubarShortcut>
@@ -109,13 +164,14 @@ const MenuBar = () => {
                 Table
               </MenubarSubTrigger>
               <MenubarSubContent>
-                <MenubarItem>1 x 1</MenubarItem>
-                <MenubarItem>2 x 2</MenubarItem>
-                <MenubarItem>3 x 3</MenubarItem>
-                <MenubarItem>4 x 4</MenubarItem>
-                <MenubarItem>5 x 5</MenubarItem>
-                <MenubarItem>6 x 6</MenubarItem>
-                <MenubarItem>7 x 7</MenubarItem>
+                {table.map((row, i) => (
+                  <MenubarItem
+                    key={i}
+                    onClick={() => insertTable({ rows: row[0], cols: row[1] })}
+                  >
+                    {row[0]}x{row[1]}
+                  </MenubarItem>
+                ))}
               </MenubarSubContent>
             </MenubarSub>
           </MenubarContent>
@@ -129,26 +185,38 @@ const MenuBar = () => {
                 Text
               </MenubarSubTrigger>
               <MenubarSubContent>
-                <MenubarItem>
+                <MenubarItem
+                  onClick={() => editor?.chain().focus().toggleBold().run()}
+                >
                   <BoldIcon className="menubarIcon" />
-                  Bold &nbsp;<MenubarShortcut>Ctrl B</MenubarShortcut>
+                  Bold <MenubarShortcut>Ctrl B</MenubarShortcut>
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem
+                  onClick={() => editor?.chain().focus().toggleItalic().run()}
+                >
                   <ItalicIcon className="menubarIcon" />
                   Italic <MenubarShortcut>Ctrl I</MenubarShortcut>
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem
+                  onClick={() =>
+                    editor?.chain().focus().toggleUnderline().run()
+                  }
+                >
                   <UnderlineIcon className="menubarIcon" />
                   Underline <MenubarShortcut>Ctrl U</MenubarShortcut>
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem
+                  onClick={() => editor?.chain().focus().toggleStrike().run()}
+                >
                   <StrikethroughIcon className="menubarIcon" />
                   Strikethrough &nbsp;
                   <MenubarShortcut>Ctrl S</MenubarShortcut>
                 </MenubarItem>
               </MenubarSubContent>
             </MenubarSub>
-            <MenubarItem>
+            <MenubarItem
+              onClick={() => editor?.chain().focus().unsetAllMarks().run()}
+            >
               <RemoveFormattingIcon className="menubarIcon" />
               Clear Formatting
             </MenubarItem>
