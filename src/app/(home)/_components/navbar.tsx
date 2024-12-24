@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import SearchInput from './search-input'
+import { UserButton } from '@clerk/nextjs'
 
 const  Navbar = ({query}:{query:string}) => {
 
@@ -14,6 +15,7 @@ const  Navbar = ({query}:{query:string}) => {
             <h3 className='text-xl'>Docs</h3>
         </div>
         <SearchInput query={query}/>
+        <UserButton/>
         <div/>
     </nav>
   )
