@@ -1,4 +1,10 @@
-'use client'
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useMutation } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
+
 import {
   Carousel,
   CarouselContent,
@@ -6,13 +12,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import { templates } from "@/constants/templates";
-import { cn } from "@/lib/utils";
-import React from "react";
 
 const TemplateGallery = () => {
-  const isCreating = false;
- 
+  const [isCreating, setIsCreating] = useState(false);
+  const create = useMutation(api.document.create);
+  const router = useRouter();
+
   return (
     <div className="bg-[#F1F3F4]">
       <div className="max-w-screen-xl mx-auto px-16 py-16 flex flex-col gap-y-4">
@@ -32,7 +39,15 @@ const TemplateGallery = () => {
                 >
                   <button
                     disabled={isCreating}
-                    onClick={() => console.log("For now creating")}
+                    onClick={() => {
+                      setIsCreating(true);
+                      create({
+                        title: template.label,
+                        initialContent: "",
+                      })
+                        .then((id) => router.push(`/documents/${id}`))
+                        .finally(() => setIsCreating(false));
+                    }}
                     style={{
                       backgroundImage: `url(${template.imageURL})`,
                       backgroundSize: "cover",
@@ -40,15 +55,16 @@ const TemplateGallery = () => {
                       backgroundRepeat: "no-repeat",
                     }}
                     className="size-full hover:border-purple-600 rounded-sm border hover:bg-purple-50 transition flex flex-col items-center justify-center gap-y-4 bg-white"
-                  >
-                  </button>
-                    <p className="text-sm font-medium truncate">{template.label}</p>
+                  ></button>
+                  <p className="text-sm font-medium truncate">
+                    {template.label}
+                  </p>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious/>
-          <CarouselNext/>
+          <CarouselPrevious />
+          <CarouselNext />
         </Carousel>
       </div>
     </div>

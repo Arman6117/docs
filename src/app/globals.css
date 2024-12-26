@@ -71,6 +71,11 @@ body {
   }
 }
 
+@layer components {
+  .documentMenuItems {
+    @apply flex cursor-pointer gap-2 text-sm;
+  }
+}
 .menubarTrigger {
   @apply text-sm font-normal py-0.5 px-2 rounded-sm hover:bg-muted h-auto;
 }
