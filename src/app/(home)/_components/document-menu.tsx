@@ -44,10 +44,10 @@ const DocumentMenu = ({ id, title }: DocumentMenuProps) => {
             onClick={(e) => e.preventDefault()}
           >
             <DropdownMenuItem
-              className="cursor-pointer text-sm"
+              className="cursor-pointer "
               onClick={handleWindowOpen}
             >
-              <ExternalLink className="size-4" />
+              <ExternalLink className="size-4 mr-2" />
               <span>Open in New Window</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -57,6 +57,7 @@ const DocumentMenu = ({ id, title }: DocumentMenuProps) => {
                 setOpenDialog(true);
               }}
               onSelect={(e) => e.preventDefault()}
+              className="cursor-pointer "
             >
               <FilePenIcon className="size-4 mr-2" />
               Rename
@@ -65,6 +66,7 @@ const DocumentMenu = ({ id, title }: DocumentMenuProps) => {
               <DropdownMenuItem
                 onSelect={(e) => e.preventDefault()}
                 onClick={(e) => e.stopPropagation()}
+                className="w-full bg-destructive cursor-pointer  text-white hover:text-black"
               >
                 <TrashIcon className="size-4 mr-2" />
                 Delete
