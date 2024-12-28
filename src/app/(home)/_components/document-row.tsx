@@ -1,20 +1,25 @@
+"use client";
 import { TableCell, TableRow } from "@/components/ui/table";
 
 import { Doc } from "../../../../convex/_generated/dataModel";
-import {format}  from 'date-fns' 
+import { format } from "date-fns";
 
 import { SiGoogledocs } from "react-icons/si";
 import { Building2Icon, CircleUserIcon } from "lucide-react";
 
-
 import DocumentMenu from "./document-menu";
+import { useRouter } from "next/navigation";
 interface DocumentRowProps {
   document: Doc<"documents">;
 }
 
 const DocumentRow = ({ document }: DocumentRowProps) => {
+  const router = useRouter();
   return (
-    <TableRow className="cursor-pointer">
+    <TableRow
+      onClick={() => router.push(`/documents/${document._id}`)}
+      className="cursor-pointer"
+    >
       <TableCell className="w-[50px]">
         <SiGoogledocs className="fill-blue-500 size-6" />
       </TableCell>
@@ -27,13 +32,13 @@ const DocumentRow = ({ document }: DocumentRowProps) => {
         ) : (
           <CircleUserIcon className="size-4" />
         )}
-        {document.orgId ? "Organization Name": "Personal"}
+        {document.orgId ? "Organization Name" : "Personal"}
       </TableCell>
-      <TableCell className="text-muted-foreground hidden md:table-cell " >
-          {format(new Date(document._creationTime), "MMM dd, yyyy")}
+      <TableCell className="text-muted-foreground hidden md:table-cell ">
+        {format(new Date(document._creationTime), "MMM dd, yyyy")}
       </TableCell>
-      <TableCell className="flex justify-end" >
-       <DocumentMenu title={document.title} id={document._id}/>
+      <TableCell className="flex justify-end">
+        <DocumentMenu title={document.title} id={document._id} />
       </TableCell>
     </TableRow>
   );
