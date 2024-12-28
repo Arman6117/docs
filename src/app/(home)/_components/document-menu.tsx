@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -6,48 +7,79 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ExternalLink, MoreVertical, PenIcon } from "lucide-react";
+import {
+  ExternalLink,
+  FilePenIcon,
+  MoreVertical,
+  TrashIcon,
+} from "lucide-react";
 
 import { Id } from "../../../../convex/_generated/dataModel";
 import RenameDialog from "../../../components/rename-dialog";
+import RemoveDialog from "@/components/remove-dialog";
+import { useState } from "react";
 
 interface DocumentMenuProps {
   id: Id<"documents">;
+  title: string;
 }
-const DocumentMenu = ({ id }: DocumentMenuProps) => {
+const DocumentMenu = ({ id, title }: DocumentMenuProps) => {
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const handleWindowOpen = () => {
     window.open(`/documents/${id}`);
   };
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant={"ghost"} size={"icon"} className="rounded-full">
-          <MoreVertical />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="space-y-2"
-        onClick={(e) => e.preventDefault()}
-      >
-        <DropdownMenuItem
-          className="cursor-pointer text-sm"
-          onClick={handleWindowOpen}
-        >
-          <ExternalLink className="size-4" />
-          <span>Open in New Window</span>
-        </DropdownMenuItem>
-        <RenameDialog documentId={id}>
-          <DropdownMenuItem
-            className="text-sm cursor-pointer"
-            onSelect={(e) => e.preventDefault()}
-            onClick={(e) => e.stopPropagation()}
+    <>
+      <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
+        <DropdownMenuTrigger asChild>
+          <Button variant={"ghost"} size={"icon"} className="rounded-full">
+            <MoreVertical />
+          </Button>
+        </DropdownMenuTrigger>
+        {openMenu && (
+          <DropdownMenuContent
+            className="space-y-2"
+            onClick={(e) => e.preventDefault()}
           >
-            <PenIcon className="size-4" />
-            Rename
-          </DropdownMenuItem>
-        </RenameDialog>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            <DropdownMenuItem
+              className="cursor-pointer text-sm"
+              onClick={handleWindowOpen}
+            >
+              <ExternalLink className="size-4" />
+              <span>Open in New Window</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenMenu(false);
+                setOpenDialog(true);
+              }}
+              onSelect={(e) => e.preventDefault()}
+            >
+              <FilePenIcon className="size-4 mr-2" />
+              Rename
+            </DropdownMenuItem>
+            <RemoveDialog documentId={id}>
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <TrashIcon className="size-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </RemoveDialog>
+          </DropdownMenuContent>
+        )}
+      </DropdownMenu>
+      <RenameDialog
+        dialogOpen={openDialog}
+        initialTitle={title}
+        documentId={id}
+        setOpenDialog={setOpenDialog}
+      />
+    </>
   );
 };
 

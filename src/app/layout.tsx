@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 import { ConvexClientProvider } from "@/components/convex-client-provider";
@@ -19,8 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${inter.className} antialiased`}>
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+      <body aria-hidden={"false"} className={` ${inter.className} antialiased`}>
+        <ConvexClientProvider>{children}
+        </ConvexClientProvider>
+        <Toaster/>
       </body>
     </html>
   );

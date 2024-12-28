@@ -15,7 +15,8 @@ const FontFamilyButton = () => {
   const fonts = [
     { label: "Arial", value: "Arial" },
     { label: "Times New Roman", value: "Times New Roman" },
-    { label: "Verdana", value: "Verdana" },
+
+    
   ];
 
   return (

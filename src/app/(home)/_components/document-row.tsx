@@ -33,7 +33,7 @@ const DocumentRow = ({ document }: DocumentRowProps) => {
           {format(new Date(document._creationTime), "MMM dd, yyyy")}
       </TableCell>
       <TableCell className="flex justify-end" >
-       <DocumentMenu id={document._id}/>
+       <DocumentMenu title={document.title} id={document._id}/>
       </TableCell>
     </TableRow>
   );
