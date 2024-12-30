@@ -55,6 +55,7 @@ export const get = query({
 
     if (!user) throw new Error("Unauthorized");
 
+    //*NORMAL SEARCH
     if (search) {
       return await ctx.db
         .query("documents")
@@ -63,6 +64,26 @@ export const get = query({
         })
         .paginate(paginationOpts);
     }
+
+    //*SEARCH WITHIN THE ORG
+    const orgId = (user.orgId ?? undefined) as string | undefined;
+
+    if (search && orgId)
+      return await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) =>
+          q.search("title", search).eq("orgId", orgId)
+        )
+        .paginate(paginationOpts);
+
+    //*DOCUMENTS ONLY FROM ORG
+    if (orgId)
+      return await ctx.db
+        .query("documents")
+        .withIndex("by_org_id", (q) => q.eq("orgId", orgId))
+        .paginate(paginationOpts);
+        
+    //*NORMAL GET ALL DOCUMENTS
     return await ctx.db
       .query("documents")
       .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject))
