@@ -6,9 +6,11 @@ export const deleteById = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
+    const document = await ctx.db.get(args.id);
 
     //TODO:Add check for org and is user is owner
     if (!user) throw new Error("Unauthorized");
+    if (!document) throw new Error("Document not found");
 
     return await ctx.db.delete(args.id);
   },
@@ -44,11 +46,26 @@ export const create = mutation({
   },
 });
 export const get = query({
-  args: { paginationOpts: paginationOptsValidator },
-  handler: async (ctx, args) => {
-    const user = await ctx.auth.getUserIdentity()
+  args: {
+    paginationOpts: paginationOptsValidator,
+    search: v.optional(v.string()),
+  },
+  handler: async (ctx, { search, paginationOpts }) => {
+    const user = await ctx.auth.getUserIdentity();
 
-    if(!user) throw new Error("Unauthorized")
-    return await ctx.db.query("documents").paginate(args.paginationOpts);
+    if (!user) throw new Error("Unauthorized");
+
+    if (search) {
+      return await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) => {
+          return q.search("title", search).eq("ownerId", user.subject);
+        })
+        .paginate(paginationOpts);
+    }
+    return await ctx.db
+      .query("documents")
+      .withIndex("by_owner_id", (q) => q.eq("ownerId", user.subject))
+      .paginate(paginationOpts);
   },
 });

@@ -14,12 +14,13 @@ import { LoaderIcon } from "lucide-react";
 import DocumentRow from "./document-row";
 import { Button } from "@/components/ui/button";
 
-const DocumentTable = () => {
+const DocumentTable = ({ searchParams }: { searchParams: string }) => {
+  
   const {
     loadMore,
     results: documents,
     status,
-  } = usePaginatedQuery(api.document.get, {}, { initialNumItems: 5 });
+  } = usePaginatedQuery(api.document.get, {search:searchParams}, { initialNumItems: 5 });
   return (
     <div className="flex flex-col gap-5 px-16 py-6 mx-auto max-w-screen">
       {documents === undefined ? (

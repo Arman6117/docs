@@ -15,7 +15,7 @@ export default async function Home({
       </div>
       <div className="mt-16">
         <TemplateGallery />
-        <DocumentTable />
+        <DocumentTable searchParams={query} />
       </div>
     </div>
   );
