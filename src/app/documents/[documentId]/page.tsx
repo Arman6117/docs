@@ -2,6 +2,7 @@ import React from "react";
 import Editor from "../_components/editor";
 import Toolbar from "../_components/toolbar";
 import Navbar from "../_components/navbar";
+import Room from "./room";
 
 const page = async ({
   params,
@@ -18,7 +19,9 @@ const page = async ({
         <Toolbar />
       </div>
       <div className="pt-[144px] print:pt-0">
-        <Editor />
+        <Room>
+          <Editor />
+        </Room>
       </div>
     </div>
   );

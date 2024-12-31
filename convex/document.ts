@@ -8,9 +8,13 @@ export const deleteById = mutation({
     const user = await ctx.auth.getUserIdentity();
     const document = await ctx.db.get(args.id);
 
-    //TODO:Add check for org and is user is owner
     if (!user) throw new Error("Unauthorized");
     if (!document) throw new Error("Document not found");
+    //TODO:Add check for org and is user is owner
+    const isOrg = user.orgId === document.orgId;
+    const isOwner = user.subject === document.ownerId;
+
+    if (!isOwner && !isOrg) throw new Error("Unauthorized");
 
     return await ctx.db.delete(args.id);
   },
@@ -18,11 +22,17 @@ export const deleteById = mutation({
 export const updateById = mutation({
   args: { id: v.id("documents"), newTitle: v.string() },
   handler: async (ctx, args) => {
-    const user = ctx.auth.getUserIdentity();
+    const user = await ctx.auth.getUserIdentity();
+    const document = await ctx.db.get(args.id);
+
+    if (!document) throw new Error("Document not found");
 
     //TODO:Add check for org and is user is owner
 
     if (!user) throw new Error("Unauthorized");
+    const isOrg = user.orgId === document.orgId;
+    const isOwner = user.subject === document.ownerId;
+    if (!isOwner && !isOrg) throw new Error("Unauthorized");
 
     return await ctx.db.patch(args.id, { title: args.newTitle });
   },
@@ -37,10 +47,12 @@ export const create = mutation({
     if (!user) {
       throw new Error("Unauthenticated");
     }
+    const orgId = (user.orgId ?? undefined) as string | undefined;
 
     return await ctx.db.insert("documents", {
       title: args.title ?? "Untitled Document",
       ownerId: user.subject,
+      orgId,
       initialContent: args.initialContent,
     });
   },
@@ -55,16 +67,6 @@ export const get = query({
 
     if (!user) throw new Error("Unauthorized");
 
-    //*NORMAL SEARCH
-    if (search) {
-      return await ctx.db
-        .query("documents")
-        .withSearchIndex("search_title", (q) => {
-          return q.search("title", search).eq("ownerId", user.subject);
-        })
-        .paginate(paginationOpts);
-    }
-
     //*SEARCH WITHIN THE ORG
     const orgId = (user.orgId ?? undefined) as string | undefined;
 
@@ -76,13 +78,23 @@ export const get = query({
         )
         .paginate(paginationOpts);
 
+    //*NORMAL SEARCH
+    if (search) {
+      return await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) => {
+          return q.search("title", search).eq("ownerId", user.subject);
+        })
+        .paginate(paginationOpts);
+    }
+
     //*DOCUMENTS ONLY FROM ORG
     if (orgId)
       return await ctx.db
         .query("documents")
         .withIndex("by_org_id", (q) => q.eq("orgId", orgId))
         .paginate(paginationOpts);
-        
+
     //*NORMAL GET ALL DOCUMENTS
     return await ctx.db
       .query("documents")

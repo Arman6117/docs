@@ -9,12 +9,15 @@ import { Building2Icon, CircleUserIcon } from "lucide-react";
 
 import DocumentMenu from "./document-menu";
 import { useRouter } from "next/navigation";
+import { useOrganization } from "@clerk/clerk-react";
 interface DocumentRowProps {
   document: Doc<"documents">;
 }
 
 const DocumentRow = ({ document }: DocumentRowProps) => {
   const router = useRouter();
+  const { organization } = useOrganization();
+
   return (
     <TableRow
       onClick={() => router.push(`/documents/${document._id}`)}
@@ -32,7 +35,7 @@ const DocumentRow = ({ document }: DocumentRowProps) => {
         ) : (
           <CircleUserIcon className="size-4" />
         )}
-        {document.orgId ? "Organization Name" : "Personal"}
+        {document.orgId ? organization?.name : "Personal"}
       </TableCell>
       <TableCell className="text-muted-foreground hidden md:table-cell ">
         {format(new Date(document._creationTime), "MMM dd, yyyy")}
