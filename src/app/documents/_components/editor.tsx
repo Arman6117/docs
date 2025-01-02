@@ -23,10 +23,13 @@ import { FontSizeExtension } from "@/extensions/font-size-extension";
 
 import { useEditorStore } from "@/store/use-editor-store";
 import { LineHeightExtension } from "@/extensions/line-height";
+import {useLiveblocksExtension} from '@liveblocks/react-tiptap'
 import { Ruler } from "./ruler";
+import { Threads } from "../[documentId]/threads";
 
 const Editor = () => {
   const { setEditor } = useEditorStore();
+  const liveblocks = useLiveblocksExtension()
   const editor = useEditor({
     immediatelyRender: false,
     onCreate({ editor }) {
@@ -62,6 +65,7 @@ const Editor = () => {
       },
     },
     extensions: [
+      liveblocks,
       LineHeightExtension.configure({
         types: ["paragraph", "heading"],
       }),
@@ -76,7 +80,7 @@ const Editor = () => {
       Color,
       FontFamily,
       TextStyle,
-      StarterKit,
+      StarterKit.configure({ history: false }),
       Image,
       ImageResize,
       Table,
@@ -96,6 +100,7 @@ const Editor = () => {
       <Ruler />
       <div className="min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
+        <Threads editor={editor}/>
       </div>
     </div>
   );

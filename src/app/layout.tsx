@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import "@liveblocks/react-ui/styles.css";
+import "@liveblocks/react-tiptap/styles.css";
 import "./globals.css";
 
 import { ConvexClientProvider } from "@/components/convex-client-provider";
@@ -21,9 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body aria-hidden={"false"} className={` ${inter.className} antialiased`}>
-        <ConvexClientProvider>{children}
-        </ConvexClientProvider>
-        <Toaster/>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <Toaster />
       </body>
     </html>
   );
