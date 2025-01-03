@@ -2,6 +2,17 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
 
+export const getById = query({
+  args: { id: v.id("documents") },
+  handler: async (ctx, { id }) => {
+   
+    const document = await ctx.db.get(id);
+
+    if (!document) throw new Error("Document not found");
+
+    return document;
+  },
+});
 export const deleteById = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
@@ -10,8 +21,8 @@ export const deleteById = mutation({
 
     if (!user) throw new Error("Unauthorized");
     if (!document) throw new Error("Document not found");
-    //TODO:Add check for org and is user is owner
-    const isOrg = user.orgId === document.orgId;
+
+    const isOrg = !!( document.orgId && document.orgId === user.org_id);
     const isOwner = user.subject === document.ownerId;
 
     if (!isOwner && !isOrg) throw new Error("Unauthorized");
@@ -27,10 +38,8 @@ export const updateById = mutation({
 
     if (!document) throw new Error("Document not found");
 
-    //TODO:Add check for org and is user is owner
-
     if (!user) throw new Error("Unauthorized");
-    const isOrg = user.orgId === document.orgId;
+    const isOrg = !!( document.orgId && document.orgId === user.org_id);
     const isOwner = user.subject === document.ownerId;
     if (!isOwner && !isOrg) throw new Error("Unauthorized");
 
