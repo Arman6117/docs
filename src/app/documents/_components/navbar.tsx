@@ -4,6 +4,7 @@ import Link from "next/link";
 import DocumentId from "./document-id";
 import MenuBar from "./menu-bar";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { Avatars } from "./avatars";
 
 const Navbar = () => {
   return (
@@ -18,6 +19,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex gap-3">
+        <Avatars/>
         <OrganizationSwitcher />
         <UserButton />
       </div>
