@@ -2,10 +2,25 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
 
+export const getByIds = query({
+  args: { ids: v.array(v.id("documents")) },
+  handler: async (ctx, { ids }) => {
+    const documents = [];
+
+    for (const id of ids) {
+      const document = await ctx.db.get(id);
+      if (document) {
+        documents.push({ id: document._id, name: document.title });
+      } else {
+        documents.push({ id, name: "[Removed]" });
+      }
+    }
+    return documents;
+  },
+});
 export const getById = query({
   args: { id: v.id("documents") },
   handler: async (ctx, { id }) => {
-   
     const document = await ctx.db.get(id);
 
     if (!document) throw new Error("Document not found");
@@ -22,7 +37,7 @@ export const deleteById = mutation({
     if (!user) throw new Error("Unauthorized");
     if (!document) throw new Error("Document not found");
 
-    const isOrg = !!( document.orgId && document.orgId === user.org_id);
+    const isOrg = !!(document.orgId && document.orgId === user.org_id);
     const isOwner = user.subject === document.ownerId;
 
     if (!isOwner && !isOrg) throw new Error("Unauthorized");
@@ -39,7 +54,7 @@ export const updateById = mutation({
     if (!document) throw new Error("Document not found");
 
     if (!user) throw new Error("Unauthorized");
-    const isOrg = !!( document.orgId && document.orgId === user.org_id);
+    const isOrg = !!(document.orgId && document.orgId === user.org_id);
     const isOwner = user.subject === document.ownerId;
     if (!isOwner && !isOrg) throw new Error("Unauthorized");
 
