@@ -17,6 +17,8 @@ const DocumentId = ({ title, id }: { title: string; id: Id<"documents"> }) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     setValue(newValue);
+
+    //TODO:Debounced value
   }
   return (
     <div className="flex gap-2 items-center">
