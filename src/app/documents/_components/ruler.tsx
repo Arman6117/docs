@@ -36,7 +36,7 @@ export const Ruler = () => {
         if (isDraggingLeft) {
           const maxLeftPosition = 816 - rightMargin - 100;
           const newLeftPosition = Math.min(rawPosition, maxLeftPosition);
-          setLeftMargin(newLeftPosition); //TODO:Make Collaborative
+          setLeftMargin(newLeftPosition);
         } else if (isDraggingRight) {
           const maxRightPosition = 816 - (leftMargin + 100);
           const newRightPosition = Math.max(816 - rawPosition, 0);
@@ -44,7 +44,7 @@ export const Ruler = () => {
             newRightPosition,
             maxRightPosition
           );
-          setRightMargin(constrainedRightPosition); //TODO:Make Collaborative
+          setRightMargin(constrainedRightPosition); 
         }
       }
     }
