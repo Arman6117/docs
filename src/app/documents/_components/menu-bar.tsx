@@ -33,8 +33,9 @@ import {
   Undo2Icon,
 } from "lucide-react";
 import { BsFilePdf } from "react-icons/bs";
+import { Doc } from "../../../../convex/_generated/dataModel";
 
-const MenuBar = () => {
+const MenuBar = ({data}: {data:Doc<'documents'>}) => {
   const { editor } = useEditorStore();
   const table = [
     [1, 1],
@@ -69,7 +70,7 @@ const MenuBar = () => {
     const blob = new Blob([JSON.stringify(content)], {
       type: "application/json",
     });
-    download(blob, `document.json`); //TODO:Use actual document name
+    download(blob, `${data.title}.json`); 
   };
   const onSaveHTML = () => {
     if (!editor) return;
@@ -77,7 +78,7 @@ const MenuBar = () => {
     const blob = new Blob([content], {
       type: "text/html",
     });
-    download(blob, `document.html`); //TODO:Use actual document name
+    download(blob, `${data.title}.html`);
   };
   const onSaveText = () => {
     if (!editor) return;
@@ -85,7 +86,7 @@ const MenuBar = () => {
     const blob = new Blob([content], {
       type: "text/plain",
     });
-    download(blob, `document.txt`); //TODO:Use actual document name
+    download(blob, `${data.title}.txt`); 
   };
 
   return (

@@ -6,9 +6,10 @@ import MenuBar from "./menu-bar";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { Avatars } from "./avatars";
 import { Inbox } from "./inbox";
+import { Doc } from "../../../../convex/_generated/dataModel";
 
 
-const Navbar = () => {
+const Navbar = ({data}:{data:Doc<'documents'>}) => {
   return (
     <nav className="flex items-center justify-between">
       <div className="flex gap-2 items-center">
@@ -16,8 +17,8 @@ const Navbar = () => {
           <Image src={"/logo.svg"} alt="logo" width={56} height={56} />
         </Link>
         <div className="flex flex-col ">
-          <DocumentId />
-          <MenuBar />
+          <DocumentId title={data.title}  id={data._id}/>
+          <MenuBar data={data}/>
         </div>
       </div>
       <div className="flex gap-3">
