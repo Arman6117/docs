@@ -1,21 +1,24 @@
 "use client";
-import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
-import { Id } from "../../../../convex/_generated/dataModel";
 import React, { useRef, useState } from "react";
-import { useMutation } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
-import { useDebounce } from "@/hooks/use-debounce";
-import { toast } from "sonner";
 import { useStatus } from "@liveblocks/react";
+import { useMutation } from "convex/react";
+
+import { useDebounce } from "@/hooks/use-debounce";
+
+import { Id } from "../../../../convex/_generated/dataModel";
+import { api } from "../../../../convex/_generated/api";
+
+import { toast } from "sonner";
+
+import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import { LoaderIcon } from "lucide-react";
 
 const DocumentId = ({ title, id }: { title: string; id: Id<"documents"> }) => {
   const [value, setValue] = useState(title);
 
-
   const [isPending, setIsPending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
+  
   const status = useStatus();
 
   const inputRef = useRef<HTMLInputElement>(null);
