@@ -28,11 +28,14 @@ import { Ruler } from "./ruler";
 import { Threads } from "../[documentId]/threads";
 import { useStorage } from "@liveblocks/react";
 
-const Editor = () => {
+const Editor = ({initialContent}:{initialContent:string |undefined}) => {
   const leftMargin = useStorage((root)=> root.leftMargin)
   const rightMargin = useStorage((root)=> root.rightMargin)
   const { setEditor } = useEditorStore();
-  const liveblocks = useLiveblocksExtension()
+  const liveblocks = useLiveblocksExtension({
+    initialContent:initialContent,
+    offlineSupport_experimental:true
+  })
 
   const editor = useEditor({
     immediatelyRender: false,

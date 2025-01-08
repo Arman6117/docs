@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/carousel";
 
 import { templates } from "@/constants/templates";
+import { toast } from "sonner";
 
 const TemplateGallery = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -43,9 +44,10 @@ const TemplateGallery = () => {
                       setIsCreating(true);
                       create({
                         title: template.label,
-                        initialContent: "",
+                        initialContent: template.initialContent,
                       })
                         .then((id) => router.push(`/documents/${id}`))
+                        .catch(() => toast.error("Something went wrong"))
                         .finally(() => setIsCreating(false));
                     }}
                     style={{
