@@ -49,6 +49,7 @@ export default function Room({ children }: { children: ReactNode }) {
         return document.map((document) => ({
           id: document.id,
           name: document.name,
+      
         }));
       }}
       resolveUsers={({ userIds }) => {

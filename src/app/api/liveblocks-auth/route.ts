@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
   const { room } = await req.json();
 
-  console.log(room);
+
   const document = await convex.query(api.document.getById, { id: room });
 
   if (!document) return new Response("Unauthorized", { status: 401 });
@@ -28,11 +28,15 @@ export async function POST(req: Request) {
 
   if (!isOrgMember && !isOwner)
     return new Response("Unauthorized", { status: 401 });
-
+ const name = user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous"
+ const nameToNumber = name.split("").reduce((acc,char)=> char.charCodeAt(0) + acc,0)
+ const hue = Math.abs(nameToNumber) % 360
+ const color = `hsl(${hue}, 80%, 60%)`
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
-      name: user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous",
+      name,
       avatar: user.imageUrl,
+      color
     },
   });
 

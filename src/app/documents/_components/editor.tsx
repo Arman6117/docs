@@ -33,7 +33,7 @@ const Editor = ({initialContent}:{initialContent:string |undefined}) => {
   const rightMargin = useStorage((root)=> root.rightMargin)
   const { setEditor } = useEditorStore();
   const liveblocks = useLiveblocksExtension({
-    initialContent:initialContent,
+    initialContent:initialContent ||  undefined,
     offlineSupport_experimental:true
   })
 
