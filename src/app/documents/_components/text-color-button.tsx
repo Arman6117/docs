@@ -1,4 +1,5 @@
 "use client";
+import { useEditorStore } from "@/store/use-editor-store";
 
 import TooltipWrapper from "@/components/tooltip-wrapper";
 import {
@@ -6,10 +7,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { SketchPicker, type ColorResult } from "react-color";
+
 import { cn } from "@/lib/utils";
 
-import { useEditorStore } from "@/store/use-editor-store";
-import { SketchPicker, type ColorResult } from "react-color";
 const TextColorButton = () => {
   const { editor } = useEditorStore();
 

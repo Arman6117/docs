@@ -2,6 +2,8 @@
 
 import { usePaginatedQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
+
+import DocumentRow from "./document-row";
 import {
   Table,
   TableRow,
@@ -10,9 +12,9 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { LoaderIcon } from "lucide-react";
-import DocumentRow from "./document-row";
 import { Button } from "@/components/ui/button";
+
+import { LoaderIcon } from "lucide-react";
 
 const DocumentTable = ({ searchParams }: { searchParams: string }) => {
   

@@ -1,14 +1,17 @@
 "use client";
 
+import { useEditorStore } from "@/store/use-editor-store";
+
 import TooltipWrapper from "@/components/tooltip-wrapper";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/use-editor-store";
+
 import { ListCollapseIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 const LineHeightButton = () => {
   const { editor } = useEditorStore();

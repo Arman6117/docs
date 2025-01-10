@@ -4,6 +4,7 @@ import {
   FloatingComposer,
   FloatingThreads,
 } from "@liveblocks/react-tiptap";
+
 import { Editor } from "@tiptap/react";
 
 export const Threads = ({editor}:{editor:Editor | null})=> {

@@ -1,16 +1,20 @@
 "use client";
 
 import { ReactNode, useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
+
+import { Id } from "../../../../convex/_generated/dataModel";
 import {
   LiveblocksProvider,
   RoomProvider,
   ClientSideSuspense,
 } from "@liveblocks/react/suspense";
-import { useParams } from "next/navigation";
-import { User } from "@/types";
+
 import { getDocuments, getUsers } from "@/actions/action";
+
 import { toast } from "sonner";
-import { Id } from "../../../../convex/_generated/dataModel";
+
+import { User } from "@/types";
 
 export default function Room({ children }: { children: ReactNode }) {
   const params = useParams();

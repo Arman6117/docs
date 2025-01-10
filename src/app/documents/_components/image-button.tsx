@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useEditorStore } from "@/store/use-editor-store";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -15,9 +15,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import TooltipWrapper from "@/components/tooltip-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import TooltipWrapper from "@/components/tooltip-wrapper";
+
+import { ImageIcon, SearchIcon, UploadIcon } from "lucide-react";
 const ImageButton = () => {
   const { editor } = useEditorStore();
   const [imageURL, setImageURL] = useState("");

@@ -1,5 +1,12 @@
 "use client";
+import { useState } from "react";
+
+import { Id } from "../../../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
+
+import RemoveDialog from "@/components/remove-dialog";
+import RenameDialog from "../../../components/rename-dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +21,6 @@ import {
   TrashIcon,
 } from "lucide-react";
 
-import { Id } from "../../../../convex/_generated/dataModel";
-import RenameDialog from "../../../components/rename-dialog";
-import RemoveDialog from "@/components/remove-dialog";
-import { useState } from "react";
 
 interface DocumentMenuProps {
   id: Id<"documents">;

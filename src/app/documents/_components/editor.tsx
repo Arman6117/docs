@@ -1,10 +1,14 @@
 "use client";
 
 import { EditorContent, useEditor } from "@tiptap/react";
+import { useEditorStore } from "@/store/use-editor-store";
+import { useStorage } from "@liveblocks/react";
+
+import { Ruler } from "./ruler";
+import { Threads } from "../[documentId]/threads";
 
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { Color } from "@tiptap/extension-color";
 import TableCell from "@tiptap/extension-table-cell";
 import ImageResize from "tiptap-extension-resize-image";
 import TableRow from "@tiptap/extension-table-row";
@@ -18,15 +22,12 @@ import FontFamily from "@tiptap/extension-font-family";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
+import { Color } from "@tiptap/extension-color";
+
 
 import { FontSizeExtension } from "@/extensions/font-size-extension";
-
-import { useEditorStore } from "@/store/use-editor-store";
-import { LineHeightExtension } from "@/extensions/line-height";
 import {useLiveblocksExtension} from '@liveblocks/react-tiptap'
-import { Ruler } from "./ruler";
-import { Threads } from "../[documentId]/threads";
-import { useStorage } from "@liveblocks/react";
+import { LineHeightExtension } from "@/extensions/line-height";
 
 const Editor = ({initialContent}:{initialContent:string |undefined}) => {
   const leftMargin = useStorage((root)=> root.leftMargin)

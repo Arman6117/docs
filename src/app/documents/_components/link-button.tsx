@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useEditorStore } from "@/store/use-editor-store";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import TooltipWrapper from "@/components/tooltip-wrapper";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+
+
+import { Link2Icon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { useEditorStore } from "@/store/use-editor-store";
-
-import { Link2Icon } from "lucide-react";
-import TooltipWrapper from "@/components/tooltip-wrapper";
 const LinkButton = () => {
   const { editor } = useEditorStore();
   const [value, setValue] = useState("");

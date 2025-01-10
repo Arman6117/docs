@@ -1,14 +1,18 @@
 "use client";
 
+import { useEditorStore } from "@/store/use-editor-store";
+
+import { Level } from "@tiptap/extension-heading";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/use-editor-store";
-import { Level } from "@tiptap/extension-heading";
+
 import { ChevronDownIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 const HeadingButton = () => {
   const { editor } = useEditorStore();

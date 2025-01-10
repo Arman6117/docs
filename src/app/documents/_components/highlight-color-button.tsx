@@ -1,18 +1,20 @@
 "use client";
 
+import { useEditorStore } from "@/store/use-editor-store";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import TooltipWrapper from "@/components/tooltip-wrapper";
+
 import { SketchPicker, type ColorResult } from "react-color";
 
-import { useEditorStore } from "@/store/use-editor-store";
+import { HighlighterIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { HighlighterIcon } from "lucide-react";
-import TooltipWrapper from "@/components/tooltip-wrapper";
 const HighlightColorButton = () => {
   const { editor } = useEditorStore();
 

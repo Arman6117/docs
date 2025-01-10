@@ -1,12 +1,21 @@
 "use client";
 import React from "react";
+import { useEditorStore } from "@/store/use-editor-store";
 
+import FontFamilyButton from "./font-famiy-button";
+import HeadingButton from "./heading-button";
+import HighlightColorButton from "./highlight-color-button";
+import ImageButton from "./image-button";
+import ToolbarButton from "./toolbar-button";
+import ListButton from "./list-button";
+import LinkButton from "./link-button";
+import TextColorButton from "./text-color-button";
+import FontSize from "./font-size";
+import AlignButton from "./align-button";
+import LineHeightButton from "./line-height-button";
 import { Separator } from "@/components/ui/separator";
 
 import { ToolbarSection } from "@/types";
-
-import ToolbarButton from "./toolbar-button";
-import FontFamilyButton from "./font-famiy-button";
 
 import {
   Bold,
@@ -20,17 +29,6 @@ import {
   Underline,
   Undo2,
 } from "lucide-react";
-
-import { useEditorStore } from "@/store/use-editor-store";
-import HeadingButton from "./heading-button";
-import TextColorButton from "./text-color-button";
-import HighlightColorButton from "./highlight-color-button";
-import LinkButton from "./link-button";
-import ImageButton from "./image-button";
-import AlignButton from "./align-button";
-import ListButton from "./list-button";
-import FontSize from "./font-size";
-import LineHeightButton from "./line-height-button";
 
 const Toolbar = () => {
   const { editor } = useEditorStore();
@@ -87,7 +85,7 @@ const Toolbar = () => {
       {
         label: "Comment",
         icon: MessageSquare,
-        isActive: editor?.isActive("liveblocksCommentMark"), 
+        isActive: editor?.isActive("liveblocksCommentMark"),
         onClick: () => editor?.chain().focus().addPendingComment().run(),
       },
       {

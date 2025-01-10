@@ -1,9 +1,14 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useMutation } from "convex/react";
 import { useEditorStore } from "@/store/use-editor-store";
 
 import { Doc } from "../../../../convex/_generated/dataModel";
+import { api } from "../../../../convex/_generated/api";
 
 import RenameDialog from "@/components/rename-dialog";
+import RemoveDialog from "@/components/remove-dialog";
 import {
   Menubar,
   MenubarContent,
@@ -16,6 +21,8 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+
+import { toast } from "sonner";
 
 import {
   BoldIcon,
@@ -36,13 +43,9 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
+
+
 import { BsFilePdf } from "react-icons/bs";
-import { useState } from "react";
-import RemoveDialog from "@/components/remove-dialog";
-import { useMutation } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 const MenuBar = ({ data }: { data: Doc<"documents"> }) => {
   const [isOpen, setIsOpen] = useState(false);

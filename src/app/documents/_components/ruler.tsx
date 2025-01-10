@@ -1,7 +1,9 @@
 "use client";
 import { useRef, useState } from "react";
-import { FaCaretDown } from "react-icons/fa";
 import { useStorage ,useMutation} from "@liveblocks/react";
+
+
+import { FaCaretDown } from "react-icons/fa";
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 export const Ruler = () => {

@@ -1,8 +1,10 @@
 "use client";
 
-import { useEditorStore } from "@/store/use-editor-store";
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
+
+import { useEditorStore } from "@/store/use-editor-store";
+
+import { MinusIcon, PlusIcon } from "lucide-react";
 
 const FontSize = () => {
   const { editor } = useEditorStore();

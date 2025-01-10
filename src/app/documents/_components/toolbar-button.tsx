@@ -2,8 +2,9 @@
 
 import TooltipWrapper from "@/components/tooltip-wrapper";
 
-import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 const ToolbarButton = ({
   label,

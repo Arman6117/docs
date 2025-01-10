@@ -2,7 +2,9 @@
 import { useOthers, useSelf } from "@liveblocks/react/suspense";
 
 import { ClientSideSuspense } from "@liveblocks/react/suspense";
+
 import { Separator } from "@/components/ui/separator";
+
 import { Loader2Icon } from "lucide-react";
 const AVATAR_SIZE = 36;
 
